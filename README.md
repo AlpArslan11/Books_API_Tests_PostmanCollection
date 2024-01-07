@@ -7,7 +7,7 @@
 #### -Jenkins – JUnit test result report
 #### - Jenkins mail notification
 
-### In Postman;
+### 1- In Postman;
 #### * Created Positive Tests, Negative Tests and EndToEnd Test(
 ##### -> User Gets the books list
 ##### -> User Gets the book info 
