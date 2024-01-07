@@ -1,11 +1,11 @@
 # Books_API_Tests_PostmanCollection
-## Tools I used;
-#### Postman
-#### Newman (Node.js required)
-#### Newman-reporter-htmlextra
-#### Jenkins
-#### Jenkins – JUnit test result report
-#### Jenkins mail notification
+## - Tools I used;
+#### - Postman
+#### - Newman (Node.js required)
+#### - Newman-reporter-htmlextra
+#### - Jenkins
+#### -Jenkins – JUnit test result report
+#### - Jenkins mail notification
 
 ### In Postman;
 #### Created Positive Tests, Negative Tests and EndToEnd Test(
