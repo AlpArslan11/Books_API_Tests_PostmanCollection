@@ -55,3 +55,8 @@ Newman CLI ->  `newman run "Location_Of_Collection.json" --reporters cli,htmlext
 
 ![image](https://github.com/AlpArslan11/Books_API_Tests_PostmanCollection/assets/101150339/3334d0b1-f7d6-4f33-baf7-0b98ea87f6f4)
 
+![image](https://github.com/AlpArslan11/Books_API_Tests_PostmanCollection/assets/101150339/931ff256-e286-45ba-b692-9e3c26234e7e)
+
+![image](https://github.com/AlpArslan11/Books_API_Tests_PostmanCollection/assets/101150339/8f75bf40-2ef0-4ccf-9c1b-e0ffb4afbc03)
+
+![image](https://github.com/AlpArslan11/Books_API_Tests_PostmanCollection/assets/101150339/c4284f28-62e2-4346-aa41-5886c3d15703)
