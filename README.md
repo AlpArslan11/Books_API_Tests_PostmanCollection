@@ -4,8 +4,8 @@
 #### - Newman (Node.js required)
 #### - Newman-reporter-htmlextra
 #### - Jenkins
-#### -Jenkins – JUnit test result report
-#### - Jenkins mail notification
+#### -Jenkins – JUnit test result report - newman-reporter-htmlextra
+#### - Jenkins - Build periodically and E-mail notification
 
 ### 1- In Postman;
 #### * Created Positive Tests, Negative Tests and EndToEnd Test(
@@ -21,9 +21,21 @@
 #### * Created tests for requests with JavaScript codes
 #### * Asserted Status Code and Response Body
 #### * Created variables using the Collection Environment. No need any other Postman-Environment to execute the Tests.
-#### * Created random variables in the Globals Environment and cleared them all after the test execution.
+#### * Created random variables in Globals Environment and cleared them all after the test execution.
 
-### 2 -  
-### 3 -  To run in parallel mode use maven test/verify/install. It wil run parallel test execution according to the tags written in Runner and TestRunner classes.
+### 2 - Newman 
+#### Run test with Newman CLI -> https://learning.postman.com/docs/collections/using-newman-cli/installing-running-newman/ 
+#### Generated Htmlextra Reports -> https://www.npmjs.com/package/newman-reporter-htmlextra
+
+### 3 - Automated Newman with Jenkins and sent the reports via mail 
+####  Created a FreeStyle project and configured from Execute Windows Batch Command -> " newman run "Via API link" --reporters cli,htmlextra,junit --reporter-htmlextra-export newman\report.html  --reporter-junit-export newman\report.xml "
+#### Configured the project to build periodically. 
+#### Configured Editable Email Notification from Post-build Actions to send the Build Log and HtmlExtra Report after each Build.
+#### Used Jenkins variable to hide the API key. (secret text)
+#### Added JUnit Test Result Report from Post-build actions.
+
+
+
+
 
 ### 4 -  Run smoke tests with Jenkins using the mvn code -> mvn test -Dtest=Runner -Dcucumber.filter.tags="@smoke"
