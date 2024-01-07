@@ -1,0 +1,1163 @@
+{
+	"info": {
+		"_postman_id": "dc3b889e-dccf-4e2e-9a24-adc13c665aa2",
+		"name": "Books_API_alparslan",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24043978"
+	},
+	"item": [
+		{
+			"name": "US09_Api Authentication",
+			"item": [
+				{
+					"name": "TC01_Register  API Client",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"const response = pm.response.json();\r",
+									"console.log(response.accessToken);\r",
+									"\r",
+									"pm.collectionVariables.set(\"accessToken_booksAPI\", response.accessToken);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"pm.globals.set(\"clientName\", pm.variables.replaceIn(\"{{$randomFullName}}\"));\r",
+									"\r",
+									"\r",
+									"pm.globals.set(\"clientEmail\", pm.variables.replaceIn(\"{{$randomEmail}}\"));\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"clientName\": \"{{clientName}}\",\r\n   \"clientEmail\": \"{{clientEmail}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl_booksAPI}}/api-clients/",
+							"host": [
+								"{{baseUrl_booksAPI}}"
+							],
+							"path": [
+								"api-clients",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC02_register an API client with registered credentials -Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\",  () => {\r",
+									"    pm.response.to.have.status(409);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.globals.unset(\"clientName\");\r",
+									"pm.globals.unset(\"clientEmail\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"clientName\": \"{{clientName}}\",\r\n   \"clientEmail\": \"{{clientEmail}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl_booksAPI}}/api-clients/",
+							"host": [
+								"{{baseUrl_booksAPI}}"
+							],
+							"path": [
+								"api-clients",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "US01_Get Status",
+			"item": [
+				{
+					"name": "TC01_Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"console.log(response.status);  //2 yolu var.\r",
+									"console.log(response['status']); // diğer yolu bu\r",
+									"\r",
+									"pm.test(\"Status should be OK\", ()=>{\r",
+									"    pm.expect(response.status).to.eql(\"OK\")\r",
+									"} )\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl_booksAPI}}/status",
+							"host": [
+								"{{baseUrl_booksAPI}}"
+							],
+							"path": [
+								"status"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "US02_List of Books",
+			"item": [
+				{
+					"name": "TC01_List of books",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"let idList = response.map(item => item.id);\r",
+									"\r",
+									"pm.test(\"Response Body has the books\", () => {\r",
+									"       pm.expect(idList.length > 0).to.eql(true);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl_booksAPI}}/books",
+							"host": [
+								"{{baseUrl_booksAPI}}"
+							],
+							"path": [
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC02_List of books using params",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									" \r",
+									"const nonFictionBooks = response.filter((book)=>book.available === true)\r",
+									"const unavailableFictionBooks = response.filter((book)=>book.available === false)\r",
+									"\r",
+									"const book = nonFictionBooks[0];\r",
+									"const unavailableBook =unavailableFictionBooks[0] \r",
+									"\r",
+									"if(unavailableBook){\r",
+									"    pm.globals.set(\"unavailableBookId\",unavailableBook.id);\r",
+									"}\r",
+									"\r",
+									"if(book){\r",
+									"    pm.globals.set(\"bookId\",book.id);\r",
+									"}\r",
+									"\r",
+									"\r",
+									"pm.test(\"Book found\", () => {\r",
+									"    pm.expect(book).to.be.an('object');\r",
+									"    pm.expect(book.available).to.eql(true); \r",
+									"    // yukarıdaki 2si aynı şey\r",
+									"     pm.expect(book.type).to.eql(\"non-fiction\"); \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Unavailable Book found\", () => {\r",
+									"    pm.expect(unavailableBook).to.be.an('object');\r",
+									"    pm.expect(unavailableBook.available).to.eql(false); \r",
+									"    // yukarıdaki 2si aynı şey\r",
+									"     pm.expect(unavailableBook.type).to.eql(\"non-fiction\"); \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl_booksAPI}}/books?type=non-fiction&limit=2",
+							"host": [
+								"{{baseUrl_booksAPI}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "non-fiction"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC03_List of books with invalid type data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\",  () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Is Error Message as expected\", () => {\r",
+									"       pm.expect(response.error).to.eql(\"Invalid value for query parameter 'type'. Must be one of: fiction, non-fiction.\");\r",
+									"  });\r",
+									"\r",
+									"  "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl_booksAPI}}/books?type=crime&limit=15",
+							"host": [
+								"{{baseUrl_booksAPI}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "crime"
+								},
+								{
+									"key": "limit",
+									"value": "15"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC03_list of books with invalid limit data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\",  () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Is Error Message as expected\", () => {\r",
+									"       pm.expect(response.error).to.eql(\"Invalid value for query parameter 'limit'. Cannot be greater than 20.\");\r",
+									"  });\r",
+									"  "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl_booksAPI}}/books?type=fiction&limit=21",
+							"host": [
+								"{{baseUrl_booksAPI}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "fiction"
+								},
+								{
+									"key": "limit",
+									"value": "21"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC03_list of books with invalid limit data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\",  () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Is Error Message as expected\", () => {\r",
+									"       pm.expect(response.error).to.eql(\"Invalid value for query parameter 'limit'. Must be greater than 0.\");\r",
+									"  });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl_booksAPI}}/books?type=fiction&limit=-1",
+							"host": [
+								"{{baseUrl_booksAPI}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "fiction"
+								},
+								{
+									"key": "limit",
+									"value": "-1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "US03_Get a Single Book",
+			"item": [
+				{
+					"name": "TC01_Get a single book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Is in stock\",  () => {\r",
+									"    pm.expect(response[\"current-stock\"]).to.be.above(1);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl_booksAPI}}/books/:bookId",
+							"host": [
+								"{{baseUrl_booksAPI}}"
+							],
+							"path": [
+								"books",
+								":bookId"
+							],
+							"variable": [
+								{
+									"key": "bookId",
+									"value": "{{bookId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC02_Get a single book with invalid book Id  - Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\",  () => {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Is Error Message as expected\", () => {\r",
+									"       pm.expect(pm.response.text()).to.include(\"No book with id\");\r",
+									"  });\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl_booksAPI}}/books/:bookId",
+							"host": [
+								"{{baseUrl_booksAPI}}"
+							],
+							"path": [
+								"books",
+								":bookId"
+							],
+							"variable": [
+								{
+									"key": "bookId",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC02_Get a single book with invalid book Id  - Negative Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\",  () => {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Is Error Message as expected\", () => {\r",
+									"       pm.expect(pm.response.text()).to.include(\"No book with id\");\r",
+									"  });\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl_booksAPI}}/books/:bookId",
+							"host": [
+								"{{baseUrl_booksAPI}}"
+							],
+							"path": [
+								"books",
+								":bookId"
+							],
+							"variable": [
+								{
+									"key": "bookId",
+									"value": "7"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "US04_Submit an Order",
+			"item": [
+				{
+					"name": "TC01_Submit an order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\",  () => {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Order created\", () => {\r",
+									"    pm.expect(response.created).to.eql(true);\r",
+									"   });\r",
+									"\r",
+									"\r",
+									"console.log(response.orderId)\r",
+									"\r",
+									"pm.globals.set(\"orderId\", response.orderId);\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken_booksAPI}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"bookId\": {{bookId}},\r\n  \"customerName\": \"{{$randomFullName}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl_booksAPI}}/orders",
+							"host": [
+								"{{baseUrl_booksAPI}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC02_Submit an order without authorization",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\",  () => {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Is Error Message as expected\", () => {\r",
+									"       pm.expect(response.error).to.eql(\"Missing Authorization header.\");\r",
+									"  });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"bookId\": {{bookId}},\r\n  \"customerName\": \"{{$randomFullName}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl_booksAPI}}/orders",
+							"host": [
+								"{{baseUrl_booksAPI}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC03_Submit an order for an un-available book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\",  () => {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Is Error Message as expected\", () => {\r",
+									"       pm.expect(response.error).to.eql(\"This book is not in stock. Try again later.\");\r",
+									"  });\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken_booksAPI}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"bookId\": {{unavailableBookId}},\r\n  \"customerName\": \"{{$randomFullName}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl_booksAPI}}/orders",
+							"host": [
+								"{{baseUrl_booksAPI}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "US05_Get All Orders",
+			"item": [
+				{
+					"name": "TC01_Get all book orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"const orderIdList = response.map(item => item.id);\r",
+									"\r",
+									"pm.test(\"Response Body has the orders\", () => {\r",
+									"       pm.expect(orderIdList.length > 0).to.eql(true);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken_booksAPI}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl_booksAPI}}/orders",
+							"host": [
+								"{{baseUrl_booksAPI}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "US06_Get An Order",
+			"item": [
+				{
+					"name": "TC01_Get an order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Is the correct order\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(pm.globals.get(\"orderId\"));\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json()\r",
+									"\r",
+									"pm.globals.set(\"customerName\",response.customerName );\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken_booksAPI}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl_booksAPI}}/orders/:orderId",
+							"host": [
+								"{{baseUrl_booksAPI}}"
+							],
+							"path": [
+								"orders",
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "{{orderId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TC02_Get an order with invalid Order ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\",  () => {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken_booksAPI}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl_booksAPI}}/orders/:orderId",
+							"host": [
+								"{{baseUrl_booksAPI}}"
+							],
+							"path": [
+								"orders",
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "abchsjb123kjkj12knn"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "US07_Update An Order",
+			"item": [
+				{
+					"name": "TC01_Update an order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\",  () => {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken_booksAPI}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"customerName\": \"John {{$randomLastName}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl_booksAPI}}/orders/:orderId",
+							"host": [
+								"{{baseUrl_booksAPI}}"
+							],
+							"path": [
+								"orders",
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "{{orderId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get an order-2 Validation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response =pm.response.json();\r",
+									"\r",
+									"pm.test(\"Updated customer name\", function () {\r",
+									"        pm.expect(response).to.not.eql(pm.globals.get(\"customerName\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken_booksAPI}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl_booksAPI}}/orders/:orderId",
+							"host": [
+								"{{baseUrl_booksAPI}}"
+							],
+							"path": [
+								"orders",
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "{{orderId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "US08_Delete An Order",
+			"item": [
+				{
+					"name": "TC01_Delete an order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\",  () => {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken_booksAPI}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl_booksAPI}}/orders/:orderId",
+							"host": [
+								"{{baseUrl_booksAPI}}"
+							],
+							"path": [
+								"orders",
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "{{orderId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a deleted order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\",  () => {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Is Error Message as expected\", () => {\r",
+									"       pm.expect(pm.response.text()).to.include(\"No order with id\");\r",
+									"  });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken_booksAPI}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl_booksAPI}}/orders/:orderId",
+							"host": [
+								"{{baseUrl_booksAPI}}"
+							],
+							"path": [
+								"orders",
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "{{orderId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "accessToken_booksAPI",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "baseUrl_booksAPI",
+			"value": "https://simple-books-api.glitch.me",
+			"type": "string"
+		}
+	]
+}
