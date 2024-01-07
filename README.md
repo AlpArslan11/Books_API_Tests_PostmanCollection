@@ -25,6 +25,7 @@
 #### * Asserted Status Code and Response Body
 #### * Created variables using the Collection Environment. (No need any other Postman-Environment to execute the Tests.)
 #### * Created random variables in Globals Environment and cleared them all after the test execution.
+#### * Used Monitors to execute the tests periodically
 
 
 ---
@@ -43,3 +44,14 @@ Newman CLI ->  `newman run "Location_Of_Collection.json" --reporters cli,htmlext
 #### Configured Editable Email Notification from Post-build Actions to send the Build Log and HtmlExtra Report after each Build.
 #### Used Jenkins variable to hide the API key. (secret text)
 #### Added JUnit Test Result Report from Post-build actions in Jenkins.
+---
+![image](https://github.com/AlpArslan11/Books_API_Tests_PostmanCollection/assets/101150339/7edea943-ab5f-435e-8797-f0dcd0ddbcb6)
+
+![image](https://github.com/AlpArslan11/Books_API_Tests_PostmanCollection/assets/101150339/d57b5f35-4196-432f-825d-abc6fcf2a6b5)
+
+![image](https://github.com/AlpArslan11/Books_API_Tests_PostmanCollection/assets/101150339/3f4ac9ac-7a9e-4d81-920c-cfbe1cddc2fa)
+
+![image](https://github.com/AlpArslan11/Books_API_Tests_PostmanCollection/assets/101150339/faee3fd4-dd87-4b88-89c1-fa26a5f48053)
+
+![image](https://github.com/AlpArslan11/Books_API_Tests_PostmanCollection/assets/101150339/3334d0b1-f7d6-4f33-baf7-0b98ea87f6f4)
+
