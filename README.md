@@ -6,7 +6,7 @@
 #### - Newman (Node.js required)
 #### - Newman-reporter-htmlextra
 #### - Jenkins
-#### - Jenkins – JUnit test result report - newman-reporter-htmlextra
+#### - Jenkins – JUnit test result report 
 #### - Jenkins - Build periodically and E-mail notification
 
 ---
