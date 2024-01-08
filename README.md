@@ -7,7 +7,7 @@
 #### - Newman-reporter-htmlextra
 #### - Jenkins
 #### - Jenkins – JUnit test result report 
-#### - Jenkins - Build periodically and E-mail notification
+#### - Jenkins - Build Periodically and E-mail Notification
 
 ---
 ###  <img align="left" alt="Coding" width="35" src="https://github.com/AlpArslan11/Books_API_Tests_PostmanCollection/assets/101150339/2363b8fd-5e6b-41e0-a602-4e43fa97cbe4"> Postman;
