@@ -40,7 +40,7 @@ Newman CLI ->  `newman run "Location_Of_Collection.json" --reporters cli,htmlext
 ### <img align="left" alt="Coding" width="70" src="https://github.com/AlpArslan11/Books_API_Tests_PostmanCollection/assets/101150339/c85c752a-bfb7-4b2d-a41b-e2a2bfb91494"> Automated Newman with Jenkins and sent the reports via mail 
 ####  Created a FreeStyle project and configured from Execute Windows Batch Command -> 
 `newman run "Via API link" --reporters cli,htmlextra,junit --reporter-htmlextra-export newman\report.html  --reporter-junit-export newman\report.xml`
-#### Configured the project to build periodically. 
+#### Configured the job to build periodically. 
 #### Configured Editable Email Notification from Post-build Actions to send the Build Log and HtmlExtra Report after each Build.
 #### Used Jenkins variable to hide the API key. (secret text)
 #### Added JUnit Test Result Report from Post-build actions in Jenkins.
