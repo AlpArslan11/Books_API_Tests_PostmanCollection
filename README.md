@@ -22,7 +22,7 @@
 ##### -> User Gets the deleted order info  )
 
 #### * Created tests for requests with JavaScript codes
-#### * Asserted Status Code and Response Body
+#### * Asserted Status Code, Content-Type and Response Body fields
 #### * Created variables using the Collection Environment. (No need any other Postman-Environment to execute the Tests.)
 #### * Created random variables in Globals Environment and cleared them all after the test execution.
 #### * Used Monitors to execute the tests periodically
